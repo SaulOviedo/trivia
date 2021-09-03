@@ -1,7 +1,5 @@
 import html
 import requests
-import pickle
-import pandas as pd
 
 questions = []
 
@@ -16,8 +14,7 @@ for i in range(20):
 
     questions += res_json['results']
 
-df = pd.DataFrame(questions)
-df.to_csv('questions.csv')
-
-# with open('questions.pickle', 'wb') as f:
-#     pickle.dump(questions, f)
+with open('questions.txt', 'w') as f:
+    for q in questions:
+        data = [q['difficulty'], q['question'], q['correct_answer']] + q['incorrect_answers']
+        f.write('||'.join(data)+'\n')
